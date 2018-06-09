@@ -29,8 +29,19 @@ public class RayShooter : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                //запуск корутина в ответ на попадание
-                StartCoroutine(SphereIndicator(hit.point));
+                //получаем объект в который попал луч
+                GameObject hitObject = hit.transform.gameObject;
+                ReactiveTarget target = hitObject.GetComponent<ReactiveTarget>();
+                if (target != null) //проверяем наличие у этого объекта компонента ReactiveTarget
+                {
+                    //вызов метода для мишени
+                    target.ReactToHit();
+                }
+                else
+                {
+                    //запуск корутина в ответ на попадание
+                    StartCoroutine(SphereIndicator(hit.point));
+                }                
             }
         }
 	}
