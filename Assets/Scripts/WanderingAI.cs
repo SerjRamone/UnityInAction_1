@@ -8,25 +8,42 @@ public class WanderingAI : MonoBehaviour
     public float speed = 3.0f;
     public float obstacleRange = 5.0f;
 
-	void Update()
+    //отслеживаем состояние персонажа
+    private bool _alive;
+
+    private void Start()
     {
-        //непрерывно движемся вперёд  в каждом кадре, несмотря на повороты
-        transform.Translate(0, 0, speed * Time.deltaTime);
+        //при создании персонаж жив
+        _alive = true;
+    }
 
-        //луч находится в том же положении и нацеливается в том же направлении, что и персонаж
-        Ray ray = new Ray(transform.position, transform.forward);
-        RaycastHit hit;
-
-        //бросаем луч с описанной вокруг него окружностью
-        if (Physics.SphereCast(ray, 0.75f, out hit))
+    void Update()
+    {
+        //движемся только если персонаж жив
+        if (_alive)
         {
-            if (hit.distance < obstacleRange)
+            //непрерывно движемся вперёд  в каждом кадре, несмотря на повороты
+            transform.Translate(0, 0, speed * Time.deltaTime);
+
+            //луч находится в том же положении и нацеливается в том же направлении, что и персонаж
+            Ray ray = new Ray(transform.position, transform.forward);
+            RaycastHit hit;
+
+            //бросаем луч с описанной вокруг него окружностью
+            if (Physics.SphereCast(ray, 0.75f, out hit))
             {
-                //поворот с наполовину случайным выбором нового анправления
-                float angle = Random.Range(-110, 110);
-                transform.Rotate(0, angle, 0);
+                if (hit.distance < obstacleRange)
+                {
+                    //поворот с наполовину случайным выбором нового анправления
+                    float angle = Random.Range(-110, 110);
+                    transform.Rotate(0, angle, 0);
+                }
             }
         }
-
 	}
+
+    public void SetAlive(bool alive)
+    {
+        _alive = alive;
+    }
 }

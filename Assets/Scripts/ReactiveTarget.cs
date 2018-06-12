@@ -7,6 +7,12 @@ public class ReactiveTarget : MonoBehaviour
     //вызывается сценарием стрельбы RayShooter
     public void ReactToHit()
     {
+        WanderingAI behavior = GetComponent<WanderingAI>();
+        //проверка нужна т.к. он может и отсутствовать
+        if (behavior != null)
+        {
+            behavior.SetAlive(false);
+        }
         StartCoroutine(Die());
     }
 
