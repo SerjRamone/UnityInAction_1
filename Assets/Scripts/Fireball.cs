@@ -19,7 +19,7 @@ public class Fireball : MonoBehaviour
         //проверяем, является ли другой объект Игроком
         if (player != null)
         {
-            Debug.Log("Player hit");
+            player.Hurt(damage);
         }
         Destroy(this.gameObject);
     }
