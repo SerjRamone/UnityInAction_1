@@ -8,6 +8,8 @@ public class WanderingAI : MonoBehaviour
     public float speed = 3.0f;
     public float obstacleRange = 5.0f;
 
+    [SerializeField] private GameObject fireballPrefab;
+    private GameObject _fireball;
     //отслеживаем состояние персонажа
     private bool _alive;
 
@@ -32,12 +34,26 @@ public class WanderingAI : MonoBehaviour
             //бросаем луч с описанной вокруг него окружностью
             if (Physics.SphereCast(ray, 0.75f, out hit))
             {
-                if (hit.distance < obstacleRange)
+                GameObject hitObject = hit.transform.gameObject;
+                //если попали в игрока
+                if (hitObject.GetComponent<PlayerCharacter>())
                 {
-                    //поворот с наполовину случайным выбором нового анправления
-                    float angle = Random.Range(-110, 110);
-                    transform.Rotate(0, angle, 0);
+                    //та же самая логика с пустым игровым объектом, что и в сценарии SceneController
+                    if (_fireball == null)
+                    {
+                        //так же как и в SceneController
+                        _fireball = Instantiate(fireballPrefab) as GameObject;
+
+                        //помещаем файерболл перед врагом и нацеливаем в направлении движения врага
+                        _fireball.transform.position = transform.TransformPoint(Vector3.forward * 1.5f);
+                        _fireball.transform.rotation = transform.rotation;
+                    }
                 }
+            }
+            else if (hit.distance < obstacleRange)
+            {
+                float angle = Random.Range(-110, 110);
+                transform.Rotate(0, angle, 0);
             }
         }
 	}
