@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WanderingAI : MonoBehaviour
@@ -48,12 +47,12 @@ public class WanderingAI : MonoBehaviour
                         _fireball.transform.position = transform.TransformPoint(Vector3.forward * 1.5f);
                         _fireball.transform.rotation = transform.rotation;
                     }
-                }
-            }
-            else if (hit.distance < obstacleRange)
-            {
-                float angle = Random.Range(-110, 110);
-                transform.Rotate(0, angle, 0);
+				} 
+				else if (hit.distance < obstacleRange)
+				{
+					float angle = Random.Range(-110, 110);
+					transform.Rotate(0, angle, 0);
+				}
             }
         }
 	}
