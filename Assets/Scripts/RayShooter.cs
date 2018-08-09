@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class RayShooter : MonoBehaviour
 {
@@ -12,13 +13,13 @@ public class RayShooter : MonoBehaviour
         _camera = GetComponent<Camera>();
 
         //скрываем указатель мыши в центре экрана
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
 	}
 	
 	void Update()
     {
-		if (Input.GetMouseButtonDown(0)) //реакция на нажатие кнопки мыши
+		if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) //реакция на нажатие кнопки мыши
         {
             //середина экрана - это половина его высоты и ширины
             Vector3 point = new Vector3(_camera.pixelWidth / 2, _camera.pixelHeight / 2, 0);
