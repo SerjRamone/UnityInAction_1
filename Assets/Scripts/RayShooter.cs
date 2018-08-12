@@ -37,6 +37,8 @@ public class RayShooter : MonoBehaviour
                 {
                     //вызов метода для мишени
                     target.ReactToHit();
+
+                    Messenger.Broadcast(GameEvent.ENEMY_HIT); //кроме реакции на попадание - рассылаем сообщение
                 }
                 else
                 {
